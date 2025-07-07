@@ -46,6 +46,7 @@ Descripción: Fusiona un personaje aleatorio de Star Wars con un Pokémon aleato
 
 URL: https://e2b1u1b55i.execute-api.us-east-1.amazonaws.com/fusionados
 
+
 POST /almacenar
 
 Descripción: Permite almacenar una estructura de datos personalizada en la CustomDataTable.
@@ -59,6 +60,7 @@ Cuerpo de la Solicitud (JSON):
   "prioridad": "alta",
   "valor": 100
 }
+
 
 GET /historial
 
