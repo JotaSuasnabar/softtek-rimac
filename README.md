@@ -1,4 +1,5 @@
 Proyecto Serverless: Fusión de Personajes (Star Wars & Pokémon) y Gestión de Datos
+
 Construcción de una API serverless robusta y escalable utilizando AWS Lambda y Amazon DynamoDB, orquestada con Serverless Framework. La aplicación permite la fusión de datos de personajes de Star Wars y Pokémon, el almacenamiento de información personalizada y la consulta de un historial de fusiones.
 
 
