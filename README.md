@@ -88,4 +88,5 @@ El despliegue de la aplicación en AWS se realiza de manera eficiente utilizando
 
 Comando de Despliegue: serverless deploy
 
+
 Este proyecto es una demostración de una arquitectura serverless bien estructurada, con énfasis en la eficiencia, escalabilidad y observabilidad.
