@@ -1,90 +1,91 @@
-Proyecto Serverless: Fusión de Personajes (Star Wars & Pokémon) y Gestión de Datos
+# Proyecto Serverless: Fusión de Personajes (Star Wars & Pokémon) y Gestión de Datos
 
-Construcción de una API serverless robusta y escalable utilizando AWS Lambda y Amazon DynamoDB, orquestada con Serverless Framework. La aplicación permite la fusión de datos de personajes de Star Wars y Pokémon, el almacenamiento de información personalizada y la consulta de un historial de fusiones.
+Este proyecto implementa una **API serverless robusta y escalable** utilizando AWS Lambda y Amazon DynamoDB, orquestada con **Serverless Framework**. La aplicación fusiona datos de personajes de Star Wars y Pokémon, permite almacenar información personalizada y consultar un historial de fusiones.
 
+---
 
-☁️ Servicios AWS Utilizados
-AWS Lambda: Funciones de cómputo sin servidor para la lógica de negocio de cada endpoint.
+## ☁️ Servicios AWS Utilizados
 
-Amazon DynamoDB: Base de datos NoSQL de alto rendimiento para el almacenamiento de datos transaccionales, historial y caché.
+- **AWS Lambda**
+- **Amazon DynamoDB**
+- **Amazon API Gateway**
 
-Amazon API Gateway: Servicio para crear, publicar, mantener, monitorear y asegurar APIs RESTful para las funciones Lambda.
+---
 
+## 🚀 Arquitectura y Tecnologías
 
-🚀 Arquitectura y Tecnologías
-Frameworks:
+### Frameworks
+- **Serverless Framework**: Despliegue y gestión de infraestructura como código (IaC).
+- **Node.js**: Entorno de ejecución para las funciones.
 
-Serverless Framework: Herramienta CLI para el despliegue y gestión de la infraestructura serverless como código (IaC).
+### Lenguajes de Programación
+- **TypeScript**: Mejora de mantenibilidad y escalabilidad del código.
 
-Node.js: Entorno de ejecución para las funciones Lambda.
+### Herramientas de Optimización
+- **powerTuningStateMachine**: Análisis de consumo de memoria y rendimiento de funciones Lambda con AWS Step Functions.
 
-Lenguajes de Programación:
+---
 
-TypeScript: Lenguaje de programación tipado que mejora la mantenibilidad y escalabilidad del código.
+## 🗄️ Almacenamiento de Datos (DynamoDB)
 
-Herramientas de Optimización:
+El proyecto utiliza tres tablas principales, configuradas con `PAY_PER_REQUEST`:
 
-powerTuningStateMachine: Una máquina de estados de AWS Step Functions para testear y analizar el consumo de memoria y el tiempo óptimo de ejecución para cada función Lambda.
+- **FusionHistoryTable**: Guarda el historial de fusiones. Incluye un GSI (ChronologicalIndex) para consultas paginadas y ordenadas por fecha.
+- **CustomDataTable**: Almacena estructuras de datos personalizadas.
+- **ApiCacheTable**: Implementa caché con TTL de 30 minutos para optimizar llamadas a APIs externas.
 
+---
 
-🗄️ Almacenamiento de Datos (DynamoDB)
-El proyecto utiliza tres tablas DynamoDB principales, configuradas con PAY_PER_REQUEST para optimizar costos:
+## 🌐 Endpoints de la API
 
-FusionHistoryTable: Almacena el historial de personajes fusionados. Incluye un índice secundario global (ChronologicalIndex) para consultas paginadas y ordenadas por fecha.
+**Base URL:** `https://e2b1u1b55i.execute-api.us-east-1.amazonaws.com`
 
-CustomDataTable: Destinada al almacenamiento de datos personalizados definidos por el usuario.
+### `GET /fusionados`
+- **Descripción**: Fusiona un personaje aleatorio de Star Wars con un Pokémon aleatorio y guarda el resultado.
+- **URL**: `/fusionados`
 
-ApiCacheTable: Implementa un mecanismo de caché para las llamadas a APIs externas. Configurada con TTL (Time-To-Live) para la expiración automática de los elementos después de 30 minutos, optimizando la frescura de los datos y el uso de recursos.
+### `POST /almacenar`
+- **Descripción**: Guarda datos personalizados definidos por el usuario.
+- **URL**: `/almacenar`
+- **Body (JSON)**:
+  ```json
+  {
+    "nombre": "Jose Suasnabar",
+    "prioridad": "alta",
+    "valor": 100
+  }
+  ```
 
+### `GET /historial`
+- **Descripción**: Recupera una lista paginada de fusiones almacenadas.
+- **URL**: `/historial`
+- **Query Params**:
+  - `limit`: Número máximo de elementos (ej: `?limit=10`)
+  - `nextToken`: Token para obtener la siguiente página (ej: `&nextToken=`)
 
-🌐 Endpoints de la API
-La API está expuesta a través de API Gateway en la URL base: https://e2b1u1b55i.execute-api.us-east-1.amazonaws.com
+---
 
-GET /fusionados
+## 🧪 Pruebas
 
-Descripción: Fusiona un personaje aleatorio de Star Wars con un Pokémon aleatorio. Almacena el resultado en el historial de fusiones.
+### Framework
+- **Jest**: Utilizado para pruebas unitarias y de integración.
 
-URL: https://e2b1u1b55i.execute-api.us-east-1.amazonaws.com/fusionados
+### Ejecución
+```bash
+npm test
+```
 
+---
 
-POST /almacenar
+## 🚀 Despliegue
 
-Descripción: Permite almacenar una estructura de datos personalizada en la CustomDataTable.
+El despliegue en AWS se realiza con Serverless Framework:
 
-URL: https://e2b1u1b55i.execute-api.us-east-1.amazonaws.com/almacenar
+```bash
+serverless deploy
+```
 
-Cuerpo de la Solicitud (JSON):
+---
 
-{
-  "nombre": "Jose Suasnabar",
-  "prioridad": "alta",
-  "valor": 100
-}
-
-
-GET /historial
-
-Descripción: Recupera una lista paginada de personajes fusionados previamente almacenados.
-
-URL: https://e2b1u1b55i.execute-api.us-east-1.amazonaws.com/historial
-
-Parámetros de Consulta:
-
-limit: Número máximo de elementos a devolver (ej., ?limit=10).
-
-nextToken: Token de paginación para obtener la siguiente página de resultados (ej., &nextToken=<token>).
-
-
-🧪 Pruebas
-Pruebas Unitarias y de Integración:
-
-Jest: Framework de pruebas utilizado para la ejecución de tests.
-
-Ejecución: npm test
-
-
-🚀 Despliegue
-El despliegue de la aplicación en AWS se realiza de manera eficiente utilizando Serverless Framework.
-
-Comando de Despliegue: serverless deploy
+Desarrollado por Jose Suasnabar © 2025
 
